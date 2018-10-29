@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>TemperaturesChart.qml</file>
         <file>AccelerometersChart.qml</file>
+        <file>Accelerometer3D.qml</file>
     </qresource>
 </RCC>

@@ -4,7 +4,6 @@ import QtCharts 2.0
 ChartView {
     id: chart
     title: "Les températures !"
-    anchors.fill: parent
     antialiasing: true
 
     BarSeries {

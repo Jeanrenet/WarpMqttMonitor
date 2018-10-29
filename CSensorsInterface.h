@@ -3,7 +3,11 @@
 
 #include <QObject>
 #include <QtMqtt/QtMqtt>
+#include <QtCharts/QLineSeries>
+
 #include "CMqttHashData.h"
+
+using namespace QtCharts;
 
 class CSensorsInterface : public QObject
 {
@@ -17,6 +21,7 @@ public:
 
 public:    
     Q_SIGNAL void dataChanged();
+    Q_INVOKABLE void updateHistoric(QLineSeries *series, qint32 maxLength, double value);
 
 protected:
     /**

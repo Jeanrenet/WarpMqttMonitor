@@ -6,9 +6,9 @@ CSensorsInterface::CSensorsInterface()
     m_values = new CMqttHashData();
 
     //initialisation du client mqtt
-    m_mqttClient = new QMqttClient();
+    m_mqttClient = new QMqttClient(this);
     connect(m_mqttClient, &QMqttClient::stateChanged, this, &CSensorsInterface::clientStateChanged);
-    m_mqttClient->setHostname("test.mosquitto.org");
+    m_mqttClient->setHostname("imx7s.ddns.net");
     m_mqttClient->setPort(1883);
     m_mqttClient->connectToHost();
 }
@@ -17,6 +17,22 @@ CSensorsInterface::~CSensorsInterface()
 {
     m_mqttClient->disconnectFromHost();
     delete m_mqttClient;
+}
+
+void CSensorsInterface::updateHistoric(QLineSeries *series, qint32 maxLength, double value)
+{
+    //si longueur maximale de l'historique atteinte
+    if (series->count() == maxLength)
+    {
+        series->remove(0);
+        //dans ce cas on décale
+        for (qint32 i = 0 ; i < maxLength - 1 ; ++i)
+        {
+            series->replace(i, series->at(i).x() - 1, series->at(i).y());
+
+        }
+    }
+    series->append(series->count(), value);
 }
 
 void CSensorsInterface::clientStateChanged(QMqttClient::ClientState state)

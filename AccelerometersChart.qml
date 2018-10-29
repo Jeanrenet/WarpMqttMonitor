@@ -5,40 +5,62 @@ import QtCharts 2.0
 ChartView {
     id: chart
     title: "Les accéléromètres !"
-    anchors.fill: parent
     antialiasing: true
 
     property int timeStamp : 0
+    property int maxValues : 10
 
     Connections {
         target: Data
         onDataChanged : {
-            lineSeriesXJean.append(Data.values.readValue("Warp7MQTT/Jean/accelerometer/X"), timeStamp)
-            lineSeriesPierreXJean.append(Data.values.readValue("Warp7MQTT/Jean/accelerometer/X"), timeStamp)
-            if (timeStamp === 60)
-            {
-                lineSeriesXJean.remove(0)
-                lineSeriesPierreXJean.remove(0)
-            }
-            else
-            {
-                timeStamp ++;
-            }
+            //z
+            Data.updateHistoric(lineSeriesZJean, maxValues, Data.values.readValue("Warp7MQTT/Jean/accelerometer/Z"))
+            Data.updateHistoric(lineSeriesPierreZJean, maxValues, Data.values.readValue("Warp7MQTT/Pierre-Jean/accelerometer/Z"))
+            //y
+            Data.updateHistoric(lineSeriesYJean, maxValues, Data.values.readValue("Warp7MQTT/Jean/accelerometer/Y"))
+            Data.updateHistoric(lineSeriesPierreYJean, maxValues, Data.values.readValue("Warp7MQTT/Pierre-Jean/accelerometer/Y"))
+            //x
+            Data.updateHistoric(lineSeriesXJean, maxValues, Data.values.readValue("Warp7MQTT/Jean/accelerometer/X"))
+            Data.updateHistoric(lineSeriesPierreXJean, maxValues, Data.values.readValue("Warp7MQTT/Pierre-Jean/accelerometer/X"))
         }
     }
 
     ChartView {
         anchors.fill: parent
         antialiasing: true
-        LineSeries {
+        SplineSeries {
             id: lineSeriesXJean
-            name: "Jean"
+            name: "Jean X"
             axisY: dataAxisY
             axisX: dataAxisX
         }
-        LineSeries {
+        SplineSeries {
             id: lineSeriesPierreXJean
-            name: "Pierre-Jean"
+            name: "Pierre-Jean X"
+            axisY: dataAxisY
+            axisX: dataAxisX
+        }
+        SplineSeries {
+            id: lineSeriesYJean
+            name: "Jean Y"
+            axisY: dataAxisY
+            axisX: dataAxisX
+        }
+        SplineSeries {
+            id: lineSeriesPierreYJean
+            name: "Pierre-Jean Y"
+            axisY: dataAxisY
+            axisX: dataAxisX
+        }
+        SplineSeries {
+            id: lineSeriesZJean
+            name: "Jean Z"
+            axisY: dataAxisY
+            axisX: dataAxisX
+        }
+        SplineSeries {
+            id: lineSeriesPierreZJean
+            name: "Pierre-Jean Z"
             axisY: dataAxisY
             axisX: dataAxisX
         }
@@ -50,9 +72,9 @@ ChartView {
         }
         ValueAxis {
             id: dataAxisX
-            titleText: "Temps en secondes"
+            titleText: "Toutes les 100 ms"
             min: 0
-            max: 60
+            max: maxValues
             tickCount: 5
         }
     }
