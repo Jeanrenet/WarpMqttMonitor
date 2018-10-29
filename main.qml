@@ -7,7 +7,7 @@ Window {
     height: 480
     title: qsTr("Moniteur")
 
-    TemperaturesChart {
+    AccelerometersChart {
 
     }
 }

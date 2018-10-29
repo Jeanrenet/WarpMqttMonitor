@@ -15,7 +15,7 @@ public:
     //exposition au QML de la classe m_values
     Q_PROPERTY(QObject* values MEMBER m_values NOTIFY dataChanged())
 
-public:
+public:    
     Q_SIGNAL void dataChanged();
 
 protected:

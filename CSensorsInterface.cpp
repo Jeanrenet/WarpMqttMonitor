@@ -7,10 +7,10 @@ CSensorsInterface::CSensorsInterface()
 
     //initialisation du client mqtt
     m_mqttClient = new QMqttClient();
+    connect(m_mqttClient, &QMqttClient::stateChanged, this, &CSensorsInterface::clientStateChanged);
     m_mqttClient->setHostname("test.mosquitto.org");
     m_mqttClient->setPort(1883);
     m_mqttClient->connectToHost();
-    connect(m_mqttClient, &QMqttClient::stateChanged, this, &CSensorsInterface::clientStateChanged);
 }
 
 CSensorsInterface::~CSensorsInterface()
