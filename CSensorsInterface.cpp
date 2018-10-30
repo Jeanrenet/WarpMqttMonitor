@@ -17,6 +17,8 @@ CSensorsInterface::~CSensorsInterface()
 {
     m_mqttClient->disconnectFromHost();
     delete m_mqttClient;
+
+    delete m_values;
 }
 
 void CSensorsInterface::updateHistoric(QLineSeries *series, qint32 maxLength, double value)

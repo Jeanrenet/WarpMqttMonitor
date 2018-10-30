@@ -8,13 +8,20 @@ Item {
     Connections {
         target: Data
         onDataChanged : {
+            //Jean
             dataModel.set(0,
                           {
                               "xPos":Data.values.readValue("Warp7MQTT/Jean/accelerometer/X"),
                               "yPos":Data.values.readValue("Warp7MQTT/Jean/accelerometer/Y"),
                               "zPos":Data.values.readValue("Warp7MQTT/Jean/accelerometer/Z")
                           })
-
+            //Pierre-Jean
+            dataModel.set(1,
+                          {
+                              "xPos":Data.values.readValue("Warp7MQTT/Pierre-Jean/accelerometer/X"),
+                              "yPos":Data.values.readValue("Warp7MQTT/Pierre-Jean/accelerometer/Y"),
+                              "zPos":Data.values.readValue("Warp7MQTT/Pierre-Jean/accelerometer/Z")
+                          })
         }
     }
     ListModel {
@@ -30,12 +37,7 @@ Item {
             zPos: 0;
         }
     }
-    Theme3D {
-        id: themeIsabelle
-        type: Theme3D.ThemePrimaryColors
-        font.family: "Lucida Handwriting"
-        font.pointSize: 40
-    }
+
     ValueAxis3D {
         id: valueAxisX
         min: -20
@@ -70,7 +72,6 @@ Item {
         id: scatterGraph
         width: dataView.width
         height: dataView.height
-        theme: themeIsabelle
         shadowQuality: AbstractGraph3D.ShadowQualitySoftLow
         scene.activeCamera.cameraPreset: Camera3D.CameraPresetIsometricRight
         axisZ: valueAxisZ

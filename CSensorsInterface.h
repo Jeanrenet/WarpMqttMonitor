@@ -21,6 +21,13 @@ public:
 
 public:    
     Q_SIGNAL void dataChanged();
+
+    /**
+     * @brief updateHistoric
+     * @param series
+     * @param maxLength
+     * @param value
+     */
     Q_INVOKABLE void updateHistoric(QLineSeries *series, qint32 maxLength, double value);
 
 protected:
